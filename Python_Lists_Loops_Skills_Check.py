@@ -224,7 +224,7 @@ while user_choice != 3:
     elif user_choice == 2:
         print("Goodbye!")
     user_choice = menu()
-print("You have exited.")
+
 
 
 # ============================================================
@@ -321,26 +321,47 @@ print(count)
 # Example: "grape" not in ["apple", "banana"] evaluates to True.
 # These expressions are useful in if statements and while loops.
 
+
 # TASK 25:
 # Create foods = ["pizza", "burger", "tacos", "sushi", "pasta"].
 # Ask the user to enter a food.
 # Use 'in' to print "Available" or "Not available".
 # Do NOT use index() to search.
 
+# What in and not in do is check if a value exists 
+# or doesn't exist inside a list or string. 
+# They will return either True or False.
+foods = ["pizza", "burger", "tacos", "sushi", "pasta"]
+food = input("Enter a food: ")
+if food in foods:
+    print("Available")
+else:
+    print("Not available")
 
 # TASK 26:
 # Create supplies = ["pencil", "notebook", "eraser", "backpack"].
 # Ask the user for an item.
 # Use 'not in' to print "Need to buy" if it is missing,
 # otherwise print "Already have it".
-
-
+supplies = ["pencil", "notebook", "eraser", "backpack"]
+item = input("Enter a stationary item: ")
+if item in supplies:
+    print("Already have it")
+else:
+    print("Need to buy")
 # TASK 27:
 # Create usernames = ["alex123", "gamer99", "pythonpro"].
 # Ask the user to enter a new username.
 # If it is already in the list, print "Username taken".
 # Otherwise append it and print the updated list.
 # Do not allow duplicates.
+usernames = ["alex123", "gamer99", "pythonpro"]
+username = input("Enter a username: ")
+if username in usernames:
+    print("Username taken")
+else:
+    usernames.append(username)
+    print(usernames)
 
 
 # TASK 28:
@@ -349,13 +370,32 @@ print(count)
 # Use a while loop to keep asking until the entered name
 # is NOT in accounts. Append the accepted name and print accounts.
 # REQUIREMENT: Use 'not in' in your solution.
+accounts = ["admin", "guest"]
+account_name = input("Enter an account name: ")
 
+while account_name in accounts:
+    print("Name taken")
+    account_name = input("Enter a different account name: ")
 
+accounts.append(account_name)
+print(accounts)
 # TASK 29:
 # Create secret_words = ["dragon", "robot", "python", "galaxy"].
 # Keep asking the user for a word UNTIL it is in secret_words.
 # Count and print the number of guesses made.
 # A correct first guess should count as 1.
+secret_words = ["dragon", "robot", "python", "galaxy"]
+guess = input("Enter your guess for the secret word: ")
+count = 1
+
+while guess not in secret_words:
+    print("Incorrect guess")
+    count += 1
+    guess = input("Try again: ")
+
+print("You guessed a secret word!")
+print("Number of tries:", count)
+
 
 
 # TASK 30:
@@ -364,6 +404,19 @@ print(count)
 # If a name is already in guests, reject it and ask again.
 # Use a while loop, 'in' or 'not in', and append().
 # Print the finished list and its length.
+print("Input five guests")
+guests = []
+length = len(guests)
+name = ""
+while len(guests) < 5:
+    name = input("Enter a name: ")
+    while name in guests:
+        print("That name is already in the guest list")
+        name = input("Enter a name: ")
+    guests.append(name)
+
+print(guests)
+print("Number of guests:", len(guests))
 
 
 # ============================================================
@@ -375,23 +428,39 @@ print(count)
 # RETURN how many elements are greater than 0.
 # Do NOT use count().
 # Test: count_positive([-2, 0, 4, 9, -1]) -> 2
-
-
+def count_positive(numbers):
+    count = 0
+    for i in numbers:
+        if i > 0:
+            count += 1
+    print(count)
+count_positive([-2, 0, 4, 9, -1])
 # TASK 32:
 # Create a function named find_item(items, target).
 # RETURN the index of the FIRST matching item, or -1 if missing.
 # Do NOT use index().
 # Test: find_item(["cat", "dog", "cat"], "cat") -> 0
 # Test: find_item(["cat", "dog"], "fish") -> -1
-
-
+def find_item(items, target):
+    if target in items:
+        return items.index(target)
+    else:
+        return -1
+print(find_item(["cat", "dog", "cat"], "cat"))
+print(find_item(["cat", "dog"], "fish"))
 # TASK 33:
 # Create a function named unique_items(items).
 # RETURN a NEW list without duplicate values, preserving first
 # appearance order. REQUIREMENT: Use 'not in'.
 # Test: unique_items([1, 2, 2, 3, 1, 4]) -> [1, 2, 3, 4]
 
-
+def unique_items(items):
+    unique_items = []
+    for i in items:
+        if i not in unique_items:
+            unique_items.append(i)
+    print(unique_items)
+unique_items([1, 2, 2, 3, 1, 4])
 # TASK 34:
 # Create a function named common_items(list1, list2).
 # RETURN a NEW list of values found in BOTH lists.
@@ -399,14 +468,26 @@ print(count)
 # REQUIREMENT: Use both 'in' and 'not in'.
 # Test: common_items([1, 2, 3, 3], [3, 4, 1]) -> [1, 3]
 
-
+def common_items(list1, list2):
+    combined_list = []
+    for i in list1:
+        if i in list2:
+            if i not in combined_list:
+                combined_list.append(i)
+    print(combined_list)
+common_items([1, 2, 3, 3], [3, 4, 1])
 # TASK 35:
 # Create a function named reverse_list(items).
 # RETURN a NEW list in reverse order, without changing items.
 # Do NOT use reverse(), reversed(), or [::-1].
 # Test: reverse_list([10, 20, 30]) -> [30, 20, 10]
+def reverse_list(items):
+    reversed = []
+    for i in items:
+        reversed.insert(0, i)
+    print(reversed)
 
-
+reverse_list([10, 20, 30])
 # ============================================================
 # SECTION 7 — DEBUGGING (TASKS 36–37)
 # ============================================================
@@ -421,6 +502,12 @@ print(count)
 #
 # Do NOT replace the while loop with a for loop.
 
+# the previous code would result in a never ending 
+# loop because the number always stays as 1
+number = 1
+while number <= 5:
+    print(number)
+    number += 1
 
 # TASK 37:
 # Fix this code so it removes ALL 4s without skipping any.
@@ -435,7 +522,14 @@ print(count)
 # Expected: [7, 9]
 # HINT: A while loop and 'in' can help.
 
+# Using remove would skip over an index, 
+# therefore not catching all the 4's.
 
+values = [4, 4, 7, 4, 9]
+for value in values:
+    while 4 in values:
+        values.remove(value)
+print(values)
 # ============================================================
 # FINAL BOSS CHALLENGES (TASKS 38–40)
 # ============================================================
@@ -453,7 +547,33 @@ print(count)
 # - Use 'in' to prevent duplicates and 'not in' to reject missing items.
 # - Handle an empty list and invalid menu selections.
 # - Keep running until the user chooses Exit.
+available_products = ["sprite", "pepsi", "milk", "tea"]
+shopping_list = []
+def menu():
+    print()
+    print("1. Add item")
+    print("2. Remove item")
+    print("3. View numbered items")
+    print("4. Search for item")
+    print("5. Exit")
+    print()
 
+    user_choice = int(input("Enter an option: "))
+
+    while user_choice < 1 or user_choice > 5:
+        print("Invalid option!")
+        user_choice = int(input('Enter an option: '))
+    
+    return user_choice
+
+user_choice = menu()
+
+while user_choice != 5:
+    if user_choice == 1:
+        for i in available_products:
+            print(f"{i+1}.", i)
+    elif user_choice == 2:
+        print("Item is removed!")
 
 # TASK 39 — GRADE ANALYZER:
 # Create a function named analyze_grades(grades).
